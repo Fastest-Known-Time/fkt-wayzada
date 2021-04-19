@@ -44,22 +44,25 @@ class WayZadaBlockSimple extends BlockBase {
       //   $fid = $trackfile['target_id'];
       //   if ($fid) {
       //     $file = File::load($fid);
-      //     $gpx_url = file_create_url($file->getFileUri());
       //   }
       // }
       $fid = $field_gps_tracks[0]['target_id'];
       $file = File::load($fid);
-      $gpx_url = file_create_url($file->getFileUri());
+
+      $gpx_url_absolute = file_create_url($file->getFileUri());
+      $gpx_url_relative = file_url_transform_relative($gpx_url_absolute);
 
       // Remove subdomain for local & dev environments
       $pattern = '/^(https?:\/\/)?.*\.fastestknowntime\.com/';
       $replacement = 'https://fastestknowntime.com';
-      $gpx_url = preg_replace($pattern, $replacement, $gpx_url);
-      $output['#gpx_url'] = $gpx_url;
+      $gpx_url_absolute = preg_replace($pattern, $replacement, $$gpx_url_absolute);
     } else {
       // No GPX; bail.
       return;
     }
+
+
+    $output['#gpx_url_absolute'] = $gpx_url_absolute;
 
     $route_title = $route->getTitle();
 
@@ -67,7 +70,7 @@ class WayZadaBlockSimple extends BlockBase {
     $options = [
       'query' => [
         'route' => $route->getTitle(),
-        'url' => $gpx_url,
+        'url' => $$gpx_url_absolute,
       ],
     ];
     $wayzada_route_url = Url::fromUri($wayzada_baseurl, $options)->toString();
