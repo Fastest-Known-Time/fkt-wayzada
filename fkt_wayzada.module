@@ -1,0 +1,33 @@
+<?php
+
+/**
+ * @file
+ * Contains fkt_wayzada.module.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+
+/**
+ * Implements hook_ENTITY_TYPE_view() for node (hook_node_view).
+ */
+function fkt_wayzada_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  // Act on Route & FKT nodes in Full Content view mode only
+  if ($view_mode != 'full' || !($entity->getType() == 'fkt' || $entity->getType() == 'route')) {
+    return;
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function fkt_wayzada_theme($existing, $type, $theme, $path) {
+  return [
+    'wayzada_block_simple' => [
+      'variables' => [
+        'gpx_url' => NULL,
+        'wayzada_route_url' => NULL
+      ]
+    ]
+  ];
+}

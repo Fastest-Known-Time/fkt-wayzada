@@ -1,0 +1,57 @@
+jscad:
+  remote: https://github.com/jscad/OpenJSCAD.org
+  js:
+    https://preview.wayzada.com/affiliates/fkt/helpers/openjscad.js: { type: external, minified: true }
+  license:
+    name: MIT
+    url: https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE
+    gpl-compatible: true
+
+lightgl.js:
+  remote: https://github.com/evanw/lightgl.js
+  js:
+    https://preview.wayzada.com/affiliates/fkt/helpers/lightgl.js: { type: external, minified: true }
+  license:
+    name: MIT
+    url: https://github.com/evanw/lightgl.js/blob/master/LICENSE
+    gpl-compatible: true
+
+csg.js:
+  remote: https://evanw.github.io/csg.js
+  js:
+    https://preview.wayzada.com/affiliates/fkt/helpers/csg.js: { type: external, minified: true }
+  license:
+    name: MIT
+    url: https://github.com/evanw/csg.js/blob/master/LICENSE
+    gpl-compatible: true
+
+proj4js:
+  remote: http://proj4js.org/
+  js:
+    https://preview.wayzada.com/affiliates/fkt/helpers/proj4.js: { type: external, minified: true }
+  license:
+    name: Unrestricted
+    url: https://github.com/proj4js/proj4js/blob/master/LICENSE.md
+    gpl-compatible: true
+
+jsPerf-vincenty:
+  remote: http://wayzada.com/
+  js:
+    https://preview.wayzada.com/affiliates/fkt/helpers/vincenty.js: { type: external, minified: true }
+  license:
+    name: MIT and GPL
+    url: https://preview.wayzada.com/affiliates/fkt/helpers/vincenty.js
+    gpl-compatible: true
+
+wayzada:
+  remote: http://wayzada.com/
+  js:
+    https://preview.wayzada.com/affiliates/fkt/main.js: { type: external, minified: true }
+  license:
+    name: unkonwn
+    url: http://wayzada.com/
+    gpl-compatible: false
+
+fkt_wayzada:
+  js:
+    js/fkt_wayzada.js: {}
