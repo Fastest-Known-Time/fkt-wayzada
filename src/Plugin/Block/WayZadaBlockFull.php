@@ -7,15 +7,15 @@ use Drupal\file\Entity\File;
 use Drupal\Core\Url;
 
 /**
- * Provides a block with the WayZada ad in its simple/minimal version:
- * just the ad, no elevation profile.
+ * Provides a block with the WayZada ad in its full version.
+ * with elevation profile.
  *
  * @Block(
- *   id = "wayzada_ad_simple",
- *   admin_label = @Translation("WayZada Ad - Simple"),
+ *   id = "wayzada_ad_full",
+ *   admin_label = @Translation("WayZada Ad - Full"),
  * )
  */
-class WayZadaBlockSimple extends BlockBase {
+class WayZadaBlockFull extends BlockBase {
 
   /**
    * {@inheritdoc}
@@ -23,7 +23,7 @@ class WayZadaBlockSimple extends BlockBase {
   public function build() {
     $output = [];
 
-    $output['#theme'] = 'wayzada_block_simple';
+    $output['#theme'] = 'wayzada_block_full';
     $output['#title'] = '';
     $output['#description'] = '';
 
@@ -51,15 +51,18 @@ class WayZadaBlockSimple extends BlockBase {
       $file = File::load($fid);
 
       $gpx_url_absolute = file_create_url($file->getFileUri());
+      $gpx_url_relative = file_url_transform_relative($gpx_url_absolute);
 
       // Remove subdomain for local & dev environments
       $pattern = '/^(https?:\/\/)?.*\.fastestknowntime\.com/';
       $replacement = 'https://fastestknowntime.com';
-      $gpx_url_absolute = preg_replace($pattern, $replacement, $$gpx_url_absolute);
+      $gpx_url_absolute = preg_replace($pattern, $replacement, $gpx_url_absolute);
     } else {
       // No GPX; bail.
       return;
     }
+
+    $output['#gpx_url_relative'] = $gpx_url_relative;
 
     $route_title = $route->getTitle();
 
@@ -73,6 +76,23 @@ class WayZadaBlockSimple extends BlockBase {
     $wayzada_route_url = Url::fromUri($wayzada_baseurl, $options)->toString();
 
     $output['#wayzada_route_url'] = $wayzada_route_url;
+
+    $output['#attached'] = [
+      'library' => [
+        // Attach external WayZada JS libs
+        'fkt_wayzada/jscad',
+        'fkt_wayzada/lightgl.js',
+        'fkt_wayzada/csg.js',
+        'fkt_wayzada/proj4js',
+        'fkt_wayzada/jsPerf-vincenty',
+
+        // And WayZada custom JS
+        'fkt_wayzada/wayzada',
+
+        // And our local JS to fire it off
+        'fkt_wayzada/fkt_wayzada'
+      ]
+    ];
 
     return $output;
   }

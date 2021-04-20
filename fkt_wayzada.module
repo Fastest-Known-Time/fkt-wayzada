@@ -25,6 +25,11 @@ function fkt_wayzada_theme($existing, $type, $theme, $path) {
   return [
     'wayzada_block_simple' => [
       'variables' => [
+        'wayzada_route_url' => NULL
+      ]
+    ],
+    'wayzada_block_full' => [
+      'variables' => [
         'gpx_url_relative' => NULL,
         'wayzada_route_url' => NULL
       ]
