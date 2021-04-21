@@ -13,6 +13,12 @@ use Drupal\Core\Url;
  * @Block(
  *   id = "wayzada_ad_full",
  *   admin_label = @Translation("WayZada Ad - Full"),
+ *   context = {
+ *     "node" = @ContextDefinition(
+ *       "entity:node",
+ *       label = @Translation("Current Node")
+ *     )
+ *   }
  * )
  */
 class WayZadaBlockFull extends BlockBase {
@@ -27,9 +33,12 @@ class WayZadaBlockFull extends BlockBase {
     $output['#title'] = '';
     $output['#description'] = '';
 
-    // Construct link to WayZada's site using route name & GPS track URL as URL parameters
-    $node = \Drupal::routeMatch()->getParameter('node');
+    // Get the node on which this block is being displayed
+    // using block context system, mostly to take care of cacheability.
+    // Requires the context annotation in @Block comment above.
+    $node = $this->getContextValue('node');
 
+    // Construct link to WayZada's site using route name & GPS track URL as URL parameters
     if ($node->getType() == 'route') {
       $route = $node;
     } else { // otherwise it's an FKT
